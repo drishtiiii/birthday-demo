@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Try here!</title>
+
+<!-- Google Font: Satisfy -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap" rel="stylesheet">
+
+<style>
+  html, body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    background: #111;
+    font-family: 'Satisfy', cursive;
+    position: relative;
+    transition: background 0.5s ease;
+  }
+
+  /* HERE box */
+  #clickBox {
+    position: absolute;
+    background: transparent; /* match page background */
+    color: #fff;
+    padding: 15px 30px;
+    border-radius: 25px;
+    font-weight: bold;
+    font-size: 1.2em; /* smaller font */
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(255,255,255,0.7);
+    z-index: 10;
+    transition: top 0.6s ease, left 0.6s ease, background 0.3s ease;
+    font-family: 'Satisfy', cursive;
+  }
+
+  #clickBox.moving {
+    background: olive; /* background changes while moving on */
+    color: #fff;
+  }
+
+  /* Confetti particles */
+  .confetti {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    pointer-events: none;
+    animation: float 6s linear infinite;
+    opacity: 0.8;
+  }
+
+  @keyframes float {
+    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+    50% { opacity: 0.6; }
+    100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div id="clickBox">Catch me .... HERE</div>
+
+<script>
+  const colors = ['#ff595e','#ffca3a','#8ac926','#1982c4','#6a4c93','#ff9f1c','#2ec4b6','#e71d36','#f5279c','#00bcd4'];
+  const clickBox = document.getElementById('clickBox');
+
+  // Confetti generation
+  function createConfetti() {
+    const confetti = document.createElement('div');
+    confetti.classList.add('confetti');
+    confetti.style.left = Math.random() * window.innerWidth + 'px';
+    confetti.style.top = window.innerHeight + 'px';
+    confetti.style.width = (5 + Math.random()*8) + 'px';
+    confetti.style.height = confetti.style.width;
+    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+    confetti.style.animationDuration = (4 + Math.random()*4) + 's';
+    document.body.appendChild(confetti);
+    setTimeout(() => confetti.remove(), 8000);
+  }
+
+  setInterval(createConfetti, 100); // continuous confetti
+
+  // Randomly move the box
+  function moveBox() {
+    const maxX = window.innerWidth - clickBox.offsetWidth;
+    const maxY = window.innerHeight - clickBox.offsetHeight;
+    const x = Math.random() * maxX;
+    const y = Math.random() * maxY;
+    clickBox.style.left = x + 'px';
+    clickBox.style.top = y + 'px';
+  }
+
+  // Flicker background
+  function changeBackground() {
+    const color = colors[Math.floor(Math.random() * colors.length)];
+    document.body.style.background = color;
+  }
+
+  setInterval(moveBox, 1500);
+  setInterval(changeBackground, 2000);
+  moveBox();
+  changeBackground();
+
+  // Click event: fade out and redirect
+  clickBox.addEventListener('click', () => {
+    clickBox.textContent = "Moving on…";
+    clickBox.classList.add('moving');
+    setTimeout(() => window.location.href = 'nextpage.html', 1200);
+  });
+
+  window.addEventListener('resize', moveBox);
+</script>
+
+</body>
+</html>
