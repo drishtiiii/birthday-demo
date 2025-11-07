@@ -82,7 +82,7 @@
     setTimeout(() => confetti.remove(), 8000);
   }
 
-  setInterval(createConfetti, 100); // continuous confetti
+  setInterval(createConfetti, 10); // continuous confetti
 
   // Randomly move the box
   function moveBox() {
@@ -101,7 +101,7 @@
   }
 
   setInterval(moveBox, 1500);
-  setInterval(changeBackground, 2000);
+  setInterval(changeBackground, 1000);
   moveBox();
   changeBackground();
 
@@ -117,6 +117,7 @@
 
 </body>
 </html>
+
 
 
 
